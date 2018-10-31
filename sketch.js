@@ -130,11 +130,12 @@ let shapes = {
 	],
 }
 let controls = {
-	80: 'pause',
-	37: 'left',
-	38: 'rotate',
-	39: 'right',
-	40: 'down',
+	80: 'pause',	// p
+	82: 'reset',	// r
+	37: 'left',		// arrow left
+	38: 'rotate',	// arrow up
+	39: 'right',	// arrow right
+	40: 'down',		// arrow down
 }
 
 class Matrix
@@ -274,15 +275,22 @@ class Game
 		this.width = w;
 		this.height = h;
 		this.size = ctx.canvas.clientHeight / h;
-		this.matrix = new Matrix(w, h);
 		this.shapes = shapes;
 		this.colors = colors;
-		this.newShape();
+		this.reset();
+	}
+
+	reset()
+	{
 		this.gameover = false;
 		this.pause = false;
 		this.level = 1;
 		this.score = 0;
 		this.lines = 0;
+		this.shape = null;
+		this.next = null;
+		this.matrix = new Matrix(this.width, this.height);
+		this.newShape();
 	}
 
 	getRandomShape()
@@ -370,6 +378,10 @@ class Game
 		if (key == 'pause')
 		{
 			this.pause = !this.pause;
+		}
+		if (key == 'reset')
+		{
+			this.reset();
 		}
 		if (this.gameover || this.pause)
 		{
