@@ -438,19 +438,25 @@ class Game
 
 		if (this.pause)
 		{
-			this.showText('Pause', this.width / 2 * this.size, this.height / 2 * this.size);
+			this.showText('Pause', this.width / 2 * this.size, this.height / 2 * this.size, 4);
 		}
 
 		if (this.gameover)
 		{
-			this.showText('Game over', this.width / 2 * this.size, this.height / 2 * this.size);
+			this.showText('Game over', this.width / 2 * this.size, this.height / 2 * this.size, 4);
 		}
 	}
 
-	showText(text, x, y, color = 'white', font = '30px Arial', align = 'center')
+	showText(text, x, y, stroke = 0, color = 'white', font = '30px Arial', align = 'center')
 	{
 		this.ctx.font = font;
 		this.ctx.textAlign = align;
+		if (stroke)
+		{
+			this.ctx.strokeStyle = 'black';
+			this.ctx.lineWidth = stroke;
+			this.ctx.strokeText(text, x, y);
+		}
 		this.ctx.fillStyle = color;
 		this.ctx.fillText(text, x, y);
 	}
@@ -493,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	function update(timestamp) 
 	{
 		// bacground
-		ctx.fillStyle = 'gray';
+		ctx.fillStyle = '#222';
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 		if (!start) start = timestamp;
